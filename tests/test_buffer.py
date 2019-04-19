@@ -1,4 +1,4 @@
-from replay_buffer import ReplayBuffer
+from ilya_agents.replay_buffer import ReplayBuffer
 
 import numpy as np
 

@@ -40,10 +40,3 @@ class Exponential(gym.core.Env):
 
         return self.useless_obs, reward, self.done, {}
 
-
-if __name__ == "__main__":
-    env = Ez()
-
-    env.reset()
-    print(env.step(0))
-    print(env.step(1))

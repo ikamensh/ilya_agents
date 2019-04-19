@@ -6,13 +6,14 @@ import tensorflow as tf
 from tensorflow.python.keras import layers, Sequential
 from gym import spaces
 
-from replay_buffer import ReplayBuffer
-from utils import clone_with_weights, track_model
+from ilya_agents.replay_buffer import ReplayBuffer
+from ilya_agents.utils import clone_with_weights, track_model
 
 class Ddpg:
 
     def __init__(self, action_space: spaces.Box, obs_space: spaces.Space,
-                 buffer_size, epsilon = 0.1, critic_lr = None, actor_lr = None):
+                 buffer_size, epsilon = 0.1, critic_lr = None, actor_lr = None,
+                 tracking_speed = 0.01, future_discount = 0.99):
 
         assert len(action_space.shape) == 1
         assert len(obs_space.shape) == 1
@@ -45,8 +46,8 @@ class Ddpg:
 
         self.buffer = ReplayBuffer(maxlen=buffer_size)
 
-        self.future_discount = 0.99
-        self.tracking_speed = 0.01
+        self.future_discount = future_discount
+        self.tracking_speed = tracking_speed
 
     @contextmanager
     def no_exploration(self):
@@ -112,12 +113,12 @@ class Ddpg:
         with tf.GradientTape() as tape:
             would_do_actions = self.compute_actions(obs1)
             score = tf.reduce_mean( self.critic( observations=obs1, actions=would_do_actions ) )
-            inverted = - score
+            loss = - score
 
         # tf optimizer follows negative of the provided gradients.
         # For this reason we provide negative gradient of the score -
         # it will result in positive gradient being followed.
-        grads = tape.gradient( inverted, self.actor.trainable_weights )
+        grads = tape.gradient( loss, self.actor.trainable_weights )
         self.optimizer.apply_gradients( zip(grads, self.actor.trainable_weights) )
 
 

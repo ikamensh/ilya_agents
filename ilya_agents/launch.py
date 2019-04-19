@@ -1,7 +1,4 @@
-from ddpg import Ddpg
-import gym
-import numpy as np
-import tensorflow as tf
+from ilya_agents.ddpg import Ddpg
 
 # from pprint import pprint
 #
@@ -9,9 +6,7 @@ import tensorflow as tf
 #     if 'Conti' in e._env_name:
 #         print(e)
 
-from ez_envs.ez_env import Ez
-from ez_envs.int_env import Integrating
-from ez_envs.exp_range_env import Exponential
+from ilya_agents.ez_envs.int_env import Integrating
 
 env = Integrating()
 # env = gym.make('MountainCarContinuous-v0')
@@ -38,6 +33,7 @@ def train_episode(episode):
         obs = obs_new
 
     print(episode, f"Train: steps: {n_steps} reward: {total_reward:.2g}")
+    return total_reward
 
 
 def trial_episode(episode):
@@ -55,6 +51,7 @@ def trial_episode(episode):
             obs = obs_new
 
     print(episode, f"Test: steps: {n_steps} reward: {total_reward:.2f}")
+    return total_reward
 
 
 for episode in range(100):
