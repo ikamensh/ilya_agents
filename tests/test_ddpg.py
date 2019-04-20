@@ -1,4 +1,4 @@
-from ilya_agents.ddpg import Ddpg
+from ilya_agents.agents.ddpg import Ddpg
 from gym import spaces
 import numpy as np
 import math

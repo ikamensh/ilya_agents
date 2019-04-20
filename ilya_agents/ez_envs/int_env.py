@@ -31,6 +31,9 @@ class Integrating(gym.core.Env):
             self.done = True
         return copy.copy( self.state ), np.squeeze(action), self.done, {}
 
+    def __str__(self):
+        return "Integrating environment"
+
 
 if __name__ == "__main__":
     env = Integrating()

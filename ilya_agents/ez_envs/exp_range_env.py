@@ -40,3 +40,6 @@ class Exponential(gym.core.Env):
 
         return self.useless_obs, reward, self.done, {}
 
+    def __str__(self):
+        return "Exponential range environment"
+

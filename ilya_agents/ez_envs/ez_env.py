@@ -32,6 +32,9 @@ class Ez(gym.core.Env):
             self.done = True
         return self.useless_obs, np.squeeze(action), self.done, {}
 
+    def __str__(self):
+        return "Linear environment"
+
 
 if __name__ == "__main__":
     env = Ez()
