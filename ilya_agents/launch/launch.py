@@ -9,8 +9,10 @@ from ilya_agents.ez_envs.exp_range_env import Exponential
 from ilya_agents.launch.lib import test_env
 
 
+# envs = [Integrating(), Ez(), Exponential()]
 envs = [Integrating(), Ez(), Exponential(), gym.make('MountainCarContinuous-v0')]
 
+env = gym.make('MountainCarContinuous-v0')
 
 def agent_constructor(env):
     return Ddpg(obs_space=env.observation_space,
@@ -20,7 +22,7 @@ def agent_constructor(env):
 
 def maping(env):
     try:
-        return test_env(env, agent_constructor, n_tries=2, n_episodes=4)
+        return test_env(env, agent_constructor, n_tries=3, n_episodes=4)
     except Exception as e:
         print(e, 'In mapping')
         return None
@@ -42,7 +44,8 @@ if __name__ == "__main__":
 
 
     for k, v in scores.items():
-        plot_group({'train': k, 'test': v}, 'plots', name=f"{Ddpg.__name__} vs {k}")
+        train, test = v
+        plot_group({'train': train, 'test': test}, 'plots', name=f"{Ddpg.__name__} vs {k}")
 
 
 

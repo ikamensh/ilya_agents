@@ -1,0 +1,3 @@
+tensorflow == 2.0.0alpha
+gym
+ilya_ezplot

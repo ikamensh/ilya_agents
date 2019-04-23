@@ -24,7 +24,7 @@ def trial_episode(agent, env):
     obs, done = env.reset(), False
     with agent.no_exploration():
         while not done:
-            env.render()
+            # env.render()
             action = agent.env_action(obs)
             obs_new, reward, done, info = env.step(action)
             n_steps += 1
